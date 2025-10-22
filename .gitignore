@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pycache
+*.log
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Node.js
+render/node_modules/
+render/package-lock.json
+render/package.json
+
+# Annotation cache and generated data
+.annot_cache/
+*.cache
+*.tmp
+*.bak
+
+# PDF and intermediate outputs
+*.pdf
+*.aux
+*.out
+*.log
+*.toc
+*.synctex.gz
+
+# Tectonic temporary build files
+_build/
+notes.tex
+notes.html
+
+# Jupyter
+.ipynb_checkpoints/
+
+# VSCode & other IDEs
+.vscode/
+.idea/
+
+# System files
+Thumbs.db
+
+# Environment variables
+.env
