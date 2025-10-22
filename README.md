@@ -111,7 +111,7 @@ python auto-notes.py RL_lecture.pdf RL_lecture_annotated.pdf \
 |--------------|----------------|-------------|
 | `input_pdf` | *path* | Path to original slides |
 | `output_pdf` | *path* | Path to save annotated PDF |
-| `--course` | string `(unspecified)` | Course name to adjust terminology |
+| `--course_name` | string `(unspecified)` | Course name to adjust terminology |
 | `--pages` | e.g. `1-3,5` (default = all) | Pages to annotate |
 | `--side` | `right` / `left` | Where to place annotations |
 | `--margin_ratio` | `0.5` | Width of annotation column (fraction of slide width) |
