@@ -1,7 +1,36 @@
 # AutoNotes
 
-> **AutoNotes** automatically generates clear, structured side-notes for your lecture PDFs using GPT-5 and KaTeX.  
-> It reads each slide, creates an explanation with equations and intuition, and produces an annotated PDF ready for GoodNotes or any note-taking app.
+**AutoNotes** automatically generates clear, structured side-notes for your lecture PDFs using GPT-5 and KaTeX.  
+It reads each slide, creates an explanation with equations and intuition, and produces an annotated PDF ready for GoodNotes or any note-taking app.
+
+### Example layout
+```
+Title
+
+   The title of the slide.
+
+Explanation
+
+   Provides a plain-language summary of the slide’s content and its main idea.
+
+Equation breakdown
+
+   Extracts each mathematical expression, rewrites it clearly, and explains 
+   every symbol.
+
+Intuition
+
+   Describes the conceptual meaning of the formulas.
+
+Mental checkpoint
+
+   Summarises the logical position in the lecture — what we’ve achieved, what 
+   comes next, and why it’s relevant.
+
+Connections
+
+   Links this topic to related areas.
+```
 
 ---
 
