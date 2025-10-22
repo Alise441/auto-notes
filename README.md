@@ -1,32 +1,32 @@
-# 🧠 AutoNotes
+# AutoNotes
 
 > **AutoNotes** automatically generates clear, structured side-notes for your lecture PDFs using GPT-5 and KaTeX.  
 > It reads each slide, creates an explanation with equations and intuition, and produces an annotated PDF ready for GoodNotes or any note-taking app.
 
 ---
 
-## ⚠️ Important note about GPT-5 usage
+## Important note about GPT-5 usage
 
 AutoNotes uses **OpenAI’s GPT-5 model** through the official API.  
 Requests to GPT-5 are **paid** — each annotation consumes API tokens depending on slide length and model output.
 
-- 🔗 Pricing: [https://openai.com/api/pricing](https://openai.com/api/pricing)  
-- 🔑 To get an API key: create an account and generate it here — [https://platform.openai.com/api-keys](https://platform.openai.com/api-keys)
+- Pricing: [https://openai.com/api/pricing](https://openai.com/api/pricing)  
+- To get an API key: create an account and generate it here — [https://platform.openai.com/api-keys](https://platform.openai.com/api-keys)
 
 ---
 
-## ✨ Features
+## Features
 
-- 🤖 **GPT-5–powered** — each slide is summarized and explained with correct math notation.  
-- 📐 **KaTeX rendering** — beautiful, scalable equations.  
-- 📄 **Vector PDF output** — annotations stay sharp and lightweight.  
-- 💾 **Per-slide caching** — text is stored locally so you can re-render layout without new GPT calls.  
-- ⚙️ **Flexible layout** — choose side, width, padding, and DPI.  
-- 🎓 **Course-aware** — tailor terminology to your subject (e.g., *Reinforcement Learning*, *Machine Learning*, *Statistics*).
+- **GPT-5–powered** — each slide is summarized and explained with correct math notation.  
+- **KaTeX rendering** — beautiful, scalable equations.  
+- **Vector PDF output** — annotations stay sharp and lightweight.  
+- **Per-slide caching** — text is stored locally so you can re-render layout without new GPT calls.  
+- **Flexible layout** — choose side, width, padding, and DPI.  
+- **Course-aware** — tailor terminology to your subject (e.g., *Reinforcement Learning*, *Machine Learning*, *Statistics*).
 
 ---
 
-## 🚀 Quick start
+## Quick start
 
 ### 1. Clone and install dependencies
 
@@ -62,7 +62,8 @@ python auto-notes.py RL_lecture.pdf RL_lecture_annotated.pdf \
     --pages 1-3
 ```
 
-This reuses (if present) cached text (`.annot_cache_kx/reinforcement-learning/RL_lecture/slide_001-003/note.md`)  
+This reuses cached text
+`.annot_cache_kx/reinforcement-learning/RL_lecture/slide_001-003/note.md` 
 and regenerates only the visual layout (no API cost).
 
 ### 4. Force requerying GPT5 and re-rendering all notes even if cached
@@ -75,10 +76,10 @@ python auto-notes.py RL_lecture.pdf RL_lecture_annotated.pdf \
 
 ---
 
-## 🧩 Command-line options
+## Command-line options
 
 | Argument | Type | Description |
-|-----------|----------------|-------------|
+|--------------|----------------|-------------|
 | `input_pdf` | *path* | Path to original slides |
 | `output_pdf` | *path* | Path to save annotated PDF |
 | `--course` | string `(unspecified)` | Course name to adjust terminology |
@@ -96,7 +97,7 @@ python auto-notes.py --help
 
 ---
 
-## 🧩 Requirements
+## Requirements
 
 **Python ≥ 3.10**
 - `pymupdf`
@@ -110,7 +111,7 @@ python auto-notes.py --help
 
 ---
 
-## 🧱 Project structure
+## Project structure
 
 ```bash
 auto-notes/
@@ -124,13 +125,10 @@ auto-notes/
 └── .annot_cache/             # Auto-generated cache per input PDF
 ```
 
-## 🧰 License
+---
+
+## License
 
 MIT License © 2025  
 Feel free to fork and adapt for your own courses.
-
----
-
-> Created by **Alina Ponomareva** at UZH —  
-> built for clarity, math, and good notes ✨
 
