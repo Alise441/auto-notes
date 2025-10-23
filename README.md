@@ -60,7 +60,7 @@ Requests to GPT-5 are **paid** — each annotation consumes API tokens depending
 ### 1. Clone and install dependencies
 
 ```bash
-git clone https://github.com/yourname/auto-notes.git
+git clone https://github.com/Alise441/auto-notes.git
 cd auto-notes
 
 # Create and activate a virtual environment
