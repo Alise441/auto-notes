@@ -12,7 +12,6 @@ SYSTEM_PROMPT = """You are a teaching assistant that generates concise, well-str
 Use plain text plus LaTeX-style math delimiters ($...$ for inline, $$...$$ for display). No LaTeX packages, no environments.
 Sections with exact headers and order, each 2-4 sentences:
 
-Title: (The title of the slide, if any.)
 Explanation: (Explain what the slide shows in simple, accessible language. Avoid jargon.)
 Equation breakdown: (If there are formulas, rewrite them using LaTeX and explain every symbol and operation. Skip this section if no formulas appear.)
 Intuition: (Explain the core idea — why it matters and how to think about it.)
@@ -36,7 +35,7 @@ Write only the annotation content with the exact section headers above, using $.
 @retry(wait=wait_exponential_jitter(initial=1, max=20),
        stop=stop_after_attempt(5),
        retry=retry_if_exception_type(Exception))
-def call_gpt5(user_prompt: str, max_tokens: int = 1500) -> str:
+def call_gpt5(user_prompt: str, max_tokens: int = 2000) -> str:
     # compose a Responses API request with system+user prompts
     resp = OA.responses.create(
         model="gpt-5",
@@ -59,11 +58,11 @@ def extract_text(page: fitz.Page) -> str:
         t = "\n".join(b[4] for b in blocks if isinstance(b[4], str)).strip()
     return t
 
-def render_md_to_pdf(markdown: str, note_width_px: int, node_script: Path, extra_env: dict) -> bytes:
+def render_md_to_pdf(markdown: str, node_script: Path, notes_rect: fitz.Rect) -> bytes:
     # invoke the Node renderer (render/render-note.js) and return PDF bytes from stdout
     env = os.environ.copy()
-    env.update(extra_env or {})
-    env["NOTE_WIDTH"] = str(note_width_px)
+    env["NOTE_WIDTH"] = str(int(notes_rect.width))
+    env["NOTE_HEIGHT"] = str(int(notes_rect.height))
     p = subprocess.run(
         ["node", str(node_script)],
         input=markdown.encode("utf-8"),
@@ -119,9 +118,7 @@ def annotate_pdf(
     margin_ratio: float = 1.0,
     pages: Optional[List[int]] = None,
     cache_root: Path = Path(".annot_cache"),
-    force: bool = False,
-    note_pad: int = 8,
-    note_dpr: float = 2.0,
+    force: bool = False
 ):
     # ensure Node.js is available for the Markdown→PDF rendering step
     if not shutil.which("node"):
@@ -175,26 +172,21 @@ def annotate_pdf(
                     title=title[:120], 
                     body=raw if raw else "(no text detected)"
             )
-            note_md = call_gpt5(prompt, max_tokens=1500)
+            note_md = call_gpt5(prompt, max_tokens=2000)
             # normalize non-breaking spaces to regular spaces for consistent rendering
             note_md = note_md.replace("\u00A0", " ")
             # make annotation headers bold for Markdown rendering
             note_md = format_annotation_headers(note_md)
             md_path.write_text(note_md, encoding="utf-8")
 
-        # compute column width in CSS pixels (96dpi ~ 1.333 px/pt)
-        px_per_pt = 96.0 / 72.0
-        width_px = max(int(notes_rect.width * px_per_pt), 1000)
-
         # render PDF fragment from Markdown (vector, via Node renderer)
-        extra_env = {"NOTE_PAD": str(note_pad), "NOTE_DPR": str(note_dpr)}
-        pdf_bytes = render_md_to_pdf(note_md, width_px, node_script, extra_env)
+        pdf_bytes = render_md_to_pdf(note_md, node_script, notes_rect)
         pdf_path.write_bytes(pdf_bytes)
 
         # insert vector PDF of notes into the destination page at notes_rect
         note_doc = fitz.open(stream=pdf_bytes, filetype="pdf")
         try:
-            new_page.show_pdf_page(notes_rect, note_doc, 0)
+            new_page.show_pdf_page(notes_rect, note_doc, 0, keep_proportion=False)
         finally:
             note_doc.close()
 
@@ -225,10 +217,6 @@ def main():
                     help="Root directory for caching annotations.")
     ap.add_argument("--force", action="store_true",
                     help="Force requerying LLM and re-rendering all notes even if cached.")
-    ap.add_argument("--note_pad", type=int, default=8,
-                    help="Inner padding in pixels for the rendered notes.")
-    ap.add_argument("--note_dpr", type=float, default=2.0, 
-                    help="Device pixel ratio for rendering (1..3)")
     args = ap.parse_args()
 
     # determine total pages and resolve optional page selection
@@ -244,9 +232,7 @@ def main():
         margin_ratio=args.margin_ratio,
         pages=pages,
         cache_root=args.cache_root,
-        force=args.force,
-        note_pad=args.note_pad,
-        note_dpr=args.note_dpr,
+        force=args.force
     )
 
 if __name__ == "__main__":
