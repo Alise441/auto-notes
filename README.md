@@ -110,7 +110,7 @@ python auto-notes.py RL_lecture.pdf RL_lecture_annotated.pdf \
 | `--course_name` | string `(unspecified)` | Course name to adjust terminology |
 | `--pages` | e.g. `1-3,5` (default = all) | Pages to annotate |
 | `--side` | `right` / `left` | Where to place annotations |
-| `--margin_ratio` | `0.5` | Width of annotation column (fraction of slide width) |
+| `--margin_ratio` | `1.0` | Width of annotation column (fraction of slide width) |
 | `--force` | flag | Force requerying LLM and re-rendering all notes even if cached |
 
 See full help with:
