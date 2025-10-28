@@ -5,10 +5,6 @@ It reads each slide, creates an explanation with equations and intuition, and pr
 
 ### Example layout
 ```
-Title
-
-   The title of the slide.
-
 Explanation
 
    Provides a plain-language summary of the slide’s content and its main idea.
@@ -116,8 +112,6 @@ python auto-notes.py RL_lecture.pdf RL_lecture_annotated.pdf \
 | `--side` | `right` / `left` | Where to place annotations |
 | `--margin_ratio` | `0.5` | Width of annotation column (fraction of slide width) |
 | `--force` | flag | Force requerying LLM and re-rendering all notes even if cached |
-| `--note_pad` | `8` | Inner padding (px) in KaTeX render |
-| `--note_dpr` | `2.0` | Device pixel ratio for Puppeteer (1–3) |
 
 See full help with:
 ```bash
