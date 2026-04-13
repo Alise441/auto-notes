@@ -64,9 +64,6 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 
-# Python packages
-pip install -r requirements.txt
-
 # Node packages for KaTeX renderer
 npm init -y --prefix render
 npm install --prefix render katex marked puppeteer
@@ -152,6 +149,6 @@ auto-notes/
 
 ## License
 
-MIT License © 2025  
+AGPL-3.0 — see [LICENSE](LICENSE).  
 Feel free to fork and adapt for your own courses.
 
